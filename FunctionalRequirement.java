@@ -36,4 +36,9 @@ public class FunctionalRequirement {
         this.description = description;
     }
 
+    public Object saveAndSendToDatabase(){
+        //This object should be replaced with the task/deliverable/etc object
+        return null;
+    }
+
 }
