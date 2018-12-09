@@ -20,6 +20,7 @@ public class Task extends FunctionalRequirement{
     String actualEndDate;
     double actualDuration;
     double actualEffort;
+    double effortCompleted;
     double percentComplete;
     LinkedList predecessorTasks = new LinkedList();
     LinkedList successorTasks = new LinkedList();
