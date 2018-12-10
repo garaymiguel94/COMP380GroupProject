@@ -29,8 +29,12 @@ public class Task extends FunctionalRequirement{
     LinkedList startToFinish = new LinkedList();
     LinkedList finishToStart = new LinkedList();
     LinkedList finishToFinish = new LinkedList();
-    boolean isMilestone;
+    boolean isMileStone;
     boolean isSummaryTask;
+
+    public Task(){
+
+    }
 
     public static void main(String[] args) {
         //For testing Calculated Duration
@@ -42,6 +46,7 @@ public class Task extends FunctionalRequirement{
 
 
     }
+
 
     //This method assumes that the resource class has been created
     //To test, I will have to create a dummy Resource class until resource created...
@@ -172,87 +177,98 @@ public class Task extends FunctionalRequirement{
         return percentComplete;
     }
     
-    // addPredecessorTask(task: Object){
-    //     predecessorTasks.add(task)
-    // }
+    public void addPredecessorTask(Task task){
+        predecessorTasks.add(task);
+    }
     
-    // addSuccessorTask(task: Object){
-    //     successorTasks.add(task)
-    // }
+    public void addSuccessorTask(Task task){
+        successorTasks.add(task);
+    }
     
-    // removePredecessorTask(id: int){
-    //     FOR the length of the predecessorTasks
-    //         IF id equals current task id
-    //             predecessorTasks.remove(index)
-    //             //Break out of loop
-    //         ELSE
-    //             //Skip
-    // }
+    public void removePredecessorTask(int id){
+
+        //Search the linkedList and delete the predecessorTask with matching ID
+        for(int i = 0; i < predecessorTasks.size(); i++){
+            Task tempTask = (Task) predecessorTasks.get(i);
+            if(tempTask.getIdentifier() == id){
+                predecessorTasks.remove(i);
+            }else{
+                System.out.println("Predecessor Task not found, call System Administrator toll free at 555-555-5525");
+            }
+         }
+    }
+
+    public void removeSuccessorTask(int id){
+        for(int i = 0; i < predecessorTasks.size(); i++){
+            Task tempTask = (Task)predecessorTasks.get(i);
+            if(tempTask.getIdentifier() == id){
+                this.successorTasks.remove(i);
+            }else{
+                System.out.println("Successor Task not found, call System Administrator toll free at 555-555-5525");
+            }
+         }
+    }
     
-    // + removeSuccessorTask(id: int){
-    // FOR the length of the successorTasks
-    //         IF id equals current task id
-    //             successorTasks.remove(index)
-    //             //Break out of loop
-    //         ELSE
-    //             //Skip
-    // }
+    public void addIssue(Object issue){
+        this.issueList.add(issue);
+    }
     
-    // addIssue(issue: Object){
-    //     issueList.add(issue);
-    // }
+    public void removeIssue(int id){
+        for(int i = 0; i < predecessorTasks.size(); i++){
+            Task tempTask = (Task) predecessorTasks.get(i);
+            if(tempTask.getIdentifier() == id){
+                this.successorTasks.remove(i);
+            }else{
+                System.out.println("Issue not found, call System Administrator toll free at 555-555-5525");
+            }
+         }
+    }
+    public void addDependancies(Task task, String dependancyType){
+         //Add the Object to linkedList, Finish to Start (fs), Start to Finish (sf), Start to Start (ss), Finish to Finish (ff)
+        if (dependancyType.equals("fs")){
+            this.finishToStart.add(task);
+        } else if(dependancyType.equals("sf")){
+            this.startToFinish.add(task);
+        } else if(dependancyType.equals("ss")){
+            this.startToStart.add(task);
+        } else if(dependancyType.equals("ff")){
+            this.finishToFinish.add(task);
+        } else{
+            System.out.println("Dependancy not found, call System Administrator toll free at 555-555-5525");
+        }
+    }
+
+    public void setTaskAsSummary(int id){
+        this.isSummaryTask = true;
+    }
     
-    // removeIssue(id: int){
-    // FOR the length of the issues
-    //         IF id equals current issue id
-    //             issue.remove(index)
-    //             //Break out of loop
-    //         ELSE
-    //             //Skip
-    // }
-    // addDependancies(task: Object, dependancyType: String){
-    //     //Add the Object to linkedList, Finish to Start (fs), Start to Finish (sf), Start to Start (ss), Finish to Finish (ff)
-    //     IF dependancy is fs
-    //         //Add task to finishToStart LinkedList
-    //     ELSE IF dependancy is sf
-    //         /Add task to startToFinish LinkedList
-    //     ELSE IF dependancy is ss
-    //         /Add task to startToStart LinkedList
-    //     ELSE IF dependancy is fs
-    //         /Add task to finishToFinish LinkedList
-    // }
+    public void setMilestone(){
+        this.isMileStone = true;
+    }
     
-    // setTaskAsSummary(id: int){
-    //     isSummaryTask = true
-    // }
-    
-    // setMilestone(){
-    //     isMileStone = true;
-    // }
-    
-    // updateDependancies(task: Object){
-    //     FOR the length of the finishToStart
+    //public void updateDependancies(Task task){
+    //     FOR the.size() of the finishToStart
     //         IF task equals current task id
     //             finishToStart.remove(index)
     //         ELSE
     //             //Skip
     //     END
     
-    //     FOR the length of the startToFinish
+    //     FOR the.size() of the startToFinish
     //         IF task equals current task id
     //             startToFinish.remove(index)
     //         ELSE
     //             //Skip
     //     END
     
-    //     FOR the length of the  startToStart
+    //     FOR the.size() of the  startToStart
     //         IF task equals current task id
     //             startToStart.remove(index)
     //         ELSE
     //             //Skip
     //     END
     
-    //     FOR the length of the finishToFinish
+    //     FOR the.size() of the finishToFinish
     //         IF task equals current task id
     //             finishToFinish.remove(index)
     //         ELSE
@@ -260,18 +276,15 @@ public class Task extends FunctionalRequirement{
     
     //     END
     
-    // listAssociatedResources(){
-    //     PRINT Resource ID    
-    // }
+    public void listAssociatedResources(){
+         System.out.println("Resource ID attached: "+ this.resource.getID());    
+    }
     
-    // listAssociatedIssues(){
-    // FOR the length of the issueList
-    //         IF issue equals current issue id
-    //             PRINT issue id
-    //         ELSE
-    //             //Skip
-    //     END
-    // }
+    public void listAssociatedIssues(){
+        for(int i = 0; i < issueList.size(); i++){
+            System.out.println("Issue Name: " + issueList.get(i).getName() + ", Issue ID: " + issueList.get(i).getID());
+        }
+    }
     
     public void removeSummaryTask(){
         isSummaryTask = false;

@@ -8,6 +8,10 @@ public class FunctionalRequirement {
     String description;
     String dueDate;
 
+    public FunctionalRequirement(){
+        
+    }
+
     public static void main(String[] args) {
         
     }
